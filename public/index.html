@@ -1,32 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <head>
     <title>Web Chat: Integrate with React</title>
 
-    <access origin="http://localhost:3000/"/>
+    <access origin="http://localhost:3000/" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
     <script src="https://unpkg.com/react@16.5.0/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@16.5.0/umd/react-dom.development.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+      crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+      integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+      crossorigin="anonymous"></script>
 
-    --><link href="https://cdn.botframework.com/botframework-webchat/latest/botchat.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    -->
+    <link href="https://cdn.botframework.com/botframework-webchat/latest/botchat.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
 
     <style>
-      html, body { height: 100% }
-      body { margin: 0 }
+      html,
+      body {
+        height: 100%
+      }
+
+      body {
+        margin: 0
+      }
+
       #webchat {
         height: 100%;
         width: 100%;
       }
 
-      .navbar{
+      .navbar {
         z-index: 1;
         position: fixed;
         top: 0;
@@ -35,118 +52,123 @@
         box-shadow: 2px 2px 3px #888888;
 
       }
+
       .navbar-custom {
         background-color: rgb(32, 145, 203);
       }
-      .nomeBot{
+
+      .nomeBot {
         color: white;
         font-weight: 500;
         margin-right: 100em;
       }
-
-
     </style>
 
   </head>
+
 <body>
 
-<nav id="chat" class="navbar navbar-light navbar-custom">
-  <a class="navbar-brand" href="#">
-    <img src="https://lh3.googleusercontent.com/-AnKeg3WtcrQ/XXlStmvtBDI/AAAAAAAAABU/jGB0ImIW6aAh3AmGkZ83geryjX8MqzzMACK8BGAsYHg/s0/2019-09-11.png" width="40" height="40" class=" rounded-circle">
-    <span class="nomeBot">Bot Carreiras</span>
+  <nav id="chat" class="navbar navbar-light navbar-custom">
+    <a class="navbar-brand" href="#">
+      <img
+        src="https://lh3.googleusercontent.com/-AnKeg3WtcrQ/XXlStmvtBDI/AAAAAAAAABU/jGB0ImIW6aAh3AmGkZ83geryjX8MqzzMACK8BGAsYHg/s0/2019-09-11.png"
+        width="40" height="40" class=" rounded-circle">
+      <span class="nomeBot">Bot Carreiras</span>
 
-  </a>
-</nav>
-
-
-
-<div id="webchat" role="main"></div>
-<script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
-<script>
-
-  const styleSet = window.WebChat.createStyleSet({
-    bubbleFromUserBackground: 'rgb(32, 145, 203)',
-    botAvatarImage: 'https://lh3.googleusercontent.com/-AnKeg3WtcrQ/XXlStmvtBDI/AAAAAAAAABU/jGB0ImIW6aAh3AmGkZ83geryjX8MqzzMACK8BGAsYHg/s0/2019-09-11.png',
-    paddingRegular: 10,
-    avatarSize: 30,
-
-    backgroundColor: '#f4f4f4',
-
-    bubbleBorderRadius: 5,
-    bubbleBorderStyle: 'solid',
-    bubbleBorderWidth: 5,
-
-    bubbleFromUserBorderColor: '#2091cb',
-    bubbleFromUserBorderRadius: 5,
-    bubbleFromUserTextColor: 'White',
-
-    bubbleFromUserNubOffset: 'bottom',
-    bubbleFromUserNubSize: 1,
-
-    messageActivityWordBreak: 'break-word',
-
-    typingAnimationDuration: 5000,
-    typingAnimationHeight: 20,
-    typingAnimationWidth: 64,
-
-    hideSendBox: false,
-    hideUploadButton: true,
-    sendBoxButtonColor: '#767676',
-    sendBoxButtonColorOnDisabled: 'rgb(32, 145, 203)',
-    sendBoxButtonColorOnFocus: 'rgb(32, 145, 203)',
-    sendBoxButtonColorOnHover: 'rgb(32, 145, 203)',
-    sendBoxHeight: 30,
-    sendBoxBorderTop: 'solid 1px #E6E6E6',
-    sendBoxPlaceholderColor: '#767676',
-    sendBoxTextWrap: false,
+    </a>
+  </nav>
 
 
 
-    suggestedActionBackground: '#2091cb',
-    suggestedActionBorder: `solid 2px #2091cb`,
-    suggestedActionBorderRadius: 5,
-    suggestedActionImageHeight: 20,
-    suggestedActionTextColor: 'White',
-    suggestedActionHeight: 40,
+  <div id="webchat" role="main"></div>
+  <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
+  <script>
 
-    enableUploadThumbnail: false,
+    const styleSet = window.WebChat.createStyleSet({
+      bubbleFromUserBackground: 'rgb(32, 145, 203)',
+      botAvatarImage: 'https://lh3.googleusercontent.com/-AnKeg3WtcrQ/XXlStmvtBDI/AAAAAAAAABU/jGB0ImIW6aAh3AmGkZ83geryjX8MqzzMACK8BGAsYHg/s0/2019-09-11.png',
+      paddingRegular: 10,
+      avatarSize: 30,
 
-  });
+      backgroundColor: '#f4f4f4',
 
-  styleSet.textContent = {
-    ...styleSet.textContent,
-    fontWeight:300,
-  };
-  (async function () {
+      bubbleBorderRadius: 5,
+      bubbleBorderStyle: 'solid',
+      bubbleBorderWidth: 5,
 
-    const res = await fetch('https://webchat-mockbot.azurewebsites.net/directline/token', { method: 'POST'});
-    const { token } = await res.json();
-    const store = window.WebChat.createStore({}, ({ dispatch }) => next => action => {
-              if (action.type === 'DIRECT_LINE/CONNECT_FULFILLED') {
-                 dispatch({
-                           type: 'WEB_CHAT/SEND_EVENT',
-                   payload: {name: 'webchat/join',
-                                 value: { language: window.navigator.language }
-                       }
-                  });
-                }
-             return next(action);
-            });
+      bubbleFromUserBorderColor: '#2091cb',
+      bubbleFromUserBorderRadius: 5,
+      bubbleFromUserTextColor: 'White',
 
-    window.WebChat.renderWebChat(
-            {
-              directLine: window.WebChat.createDirectLine({token: 'OkDD5s6VKCw.TihPiJSKkxJBLKhQAJ-9DSCkALaDncqUXanh7GOWt08'}),
-              store,
-              styleSet,
-              userID: 'YOUR_USER_ID'
+      bubbleFromUserNubOffset: 'bottom',
+      bubbleFromUserNubSize: 1,
 
-            },
-            document.getElementById('webchat')
-    );
+      messageActivityWordBreak: 'break-word',
 
-    document.querySelector('#webchat > *').focus();
-  })().catch(err => console.error(err));
+      typingAnimationDuration: 5000,
+      typingAnimationHeight: 20,
+      typingAnimationWidth: 64,
 
-</script>
+      hideSendBox: false,
+      hideUploadButton: true,
+      sendBoxButtonColor: '#767676',
+      sendBoxButtonColorOnDisabled: 'rgb(32, 145, 203)',
+      sendBoxButtonColorOnFocus: 'rgb(32, 145, 203)',
+      sendBoxButtonColorOnHover: 'rgb(32, 145, 203)',
+      sendBoxHeight: 30,
+      sendBoxBorderTop: 'solid 1px #E6E6E6',
+      sendBoxPlaceholderColor: '#767676',
+      sendBoxTextWrap: false,
+
+
+
+      suggestedActionBackground: '#2091cb',
+      suggestedActionBorder: `solid 2px #2091cb`,
+      suggestedActionBorderRadius: 5,
+      suggestedActionImageHeight: 20,
+      suggestedActionTextColor: 'White',
+      suggestedActionHeight: 40,
+
+      enableUploadThumbnail: false,
+
+    });
+
+    styleSet.textContent = {
+      ...styleSet.textContent,
+      fontWeight: 300,
+    };
+    (async function () {
+
+      const res = await fetch('https://webchat-mockbot.azurewebsites.net/directline/token', { method: 'POST' });
+      const { token } = await res.json();
+      const store = window.WebChat.createStore({}, ({ dispatch }) => next => action => {
+        if (action.type === 'DIRECT_LINE/CONNECT_FULFILLED') {
+          dispatch({
+            type: 'WEB_CHAT/SEND_EVENT',
+            payload: {
+              name: 'webchat/join',
+              value: { language: window.navigator.language }
+            }
+          });
+        }
+        return next(action);
+      });
+
+      window.WebChat.renderWebChat(
+        {
+          directLine: window.WebChat.createDirectLine({ token: 'OkDD5s6VKCw.TihPiJSKkxJBLKhQAJ-9DSCkALaDncqUXanh7GOWt08' }),
+          store,
+          styleSet,
+          userID: 'YOUR_USER_ID'
+
+        },
+        document.getElementById('webchat')
+      );
+
+      document.querySelector('#webchat > *').focus();
+    })().catch(err => console.error(err));
+
+  </script>
 </body>
+
 </html>
